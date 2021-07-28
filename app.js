@@ -10,20 +10,35 @@ const { findMean, findMedian, findMode } = require("./stats");
 const { convertStrNums } = require("./utils");
 
 const MISSING = "Expected key `nums` with comma-separated list of numbers.";
-
 /** Finds mean of nums in qs: returns {operation: "mean", result } */
 app.get("/mean", function (req, res) {
-  let nums = [...req.query.nums];
-  if (nums.length < 1) {
+  let nums = req.query.nums ? req.query.nums.split(',') : undefined;
+  if (nums === undefined) {
     throw new BadRequestError(MISSING);
   }
   nums = convertStrNums(nums);
-  return res.json(findMean(nums));
+  return res.json({operation: "mean", value: findMean(nums)});
 });
 
 /** Finds median of nums in qs: returns {operation: "median", result } */
+app.get("/median", function (req, res) {
+  let nums = req.query.nums ? req.query.nums.split(',') : undefined;
+  if (nums === undefined) {
+    throw new BadRequestError(MISSING);
+  }
+  nums = convertStrNums(nums);
+  return res.json({operation: "median", value: findMedian(nums)});
+});
 
-/** Finds mode of nums in qs: returns {operation: "mean", result } */
+/** Finds mode of nums in qs: returns {operation: "mode", result } */
+app.get("/mode", function (req, res) {
+  let nums = req.query.nums ? req.query.nums.split(',') : undefined;
+  if (nums === undefined) {
+    throw new BadRequestError(MISSING);
+  }
+  nums = convertStrNums(nums);
+  return res.json({operation: "mode", value: findMode(nums)});
+});
 
 /** 404 handler: matches unmatched routes; raises NotFoundError. */
 app.use(function (req, res, next) {
