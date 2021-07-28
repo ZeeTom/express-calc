@@ -12,7 +12,7 @@ const { convertStrNums } = require("./utils");
 const MISSING = "Expected key `nums` with comma-separated list of numbers.";
 /** Finds mean of nums in qs: returns {operation: "mean", result } */
 app.get("/mean", function (req, res) {
-  let nums = req.query.nums ? req.query.nums.split(',') : undefined;
+  let nums = req.query.nums ? req.query.nums.split(',') : undefined; //using nums to represent 3 things, change patten
   if (nums === undefined) {
     throw new BadRequestError(MISSING);
   }

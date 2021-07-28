@@ -3,9 +3,8 @@ const { BadRequestError } = require("./expressError");
 /** Convert strNums like ["1","2","3"] to [1, 2, 3]. */
 
 function convertStrNums(strNums) {
-  let nums;
-  nums = strNums.map((strNum) => +strNum);
-  
+  let nums = strNums.map((strNum) => +strNum);
+  //find which is not a number and have it in the return message
   if (nums.includes(NaN)) throw new BadRequestError();
  
   return nums;
